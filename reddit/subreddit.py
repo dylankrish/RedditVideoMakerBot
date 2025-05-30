@@ -1,6 +1,8 @@
 import re
 
 import praw
+import pyotp
+import hashlib
 from praw.models import MoreComments
 from prawcore.exceptions import ResponseException
 
@@ -22,8 +24,12 @@ def get_subreddit_threads(POST_ID: str):
 
     content = {}
     if settings.config["reddit"]["creds"]["2fa"]:
-        print("\nEnter your two-factor authentication code from your authenticator app.\n")
-        code = input("> ")
+        # print("\nEnter your two-factor authentication code from your authenticator app.\n")
+        # code = input("> ")
+        totpsecret = settings.config["reddit"]["creds"]["totpsecret"]
+        totp = pyotp.TOTP(totpsecret, digits=6, digest=hashlib.sha1)
+        code = totp.now()
+        print("\nGenerated TOTP code: " + code)
         print()
         pw = settings.config["reddit"]["creds"]["password"]
         passkey = f"{pw}:{code}"
