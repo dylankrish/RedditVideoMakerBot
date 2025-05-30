@@ -233,7 +233,7 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
                         [comment_tl, comment["comment_id"]],
                     )
                 try:
-                    target = f'shreddit-comment[thingid="t1_{comment["comment_id"]}"] div#t1_{comment["comment_id"]}-comment-rtjson-content'
+                    target = f'shreddit-comment[thingid="t1_{comment["comment_id"]}"]'
                     visible = page.locator(target).is_visible()
                     
                     if not visible:
