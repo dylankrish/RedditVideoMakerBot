@@ -86,7 +86,7 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
             color_scheme="dark",
             viewport=ViewportSize(width=W, height=H),
             device_scale_factor=dsf,
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+            user_agent="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
         )
         cookies = json.load(cookie_file)
         cookie_file.close()
@@ -233,7 +233,7 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
                         [comment_tl, comment["comment_id"]],
                     )
                 try:
-                    target = f'shreddit-comment[thingid="t1_{comment["comment_id"]}"]'
+                    target = f'shreddit-comment[thingid="t1_{comment["comment_id"]}"][depth="0"]'
                     visible = page.locator(target).is_visible()
                     
                     if not visible:
