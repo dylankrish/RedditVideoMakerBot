@@ -72,9 +72,10 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
     screenshot_num: int
     with sync_playwright() as p:
         print_substep("Launching Headless Browser...")
-
+        # browser_path = "/ home/dylank/chromium-latest-linux/latest/chrome"
         browser = p.chromium.launch(
             headless=True
+            # executable_path=browser_path
         )  # headless=False will show the browser for debugging purposes
         # Device scale factor (or dsf for short) allows us to increase the resolution of the screenshots
         # When the dsf is 1, the width of the screenshot is 600 pixels
@@ -185,6 +186,7 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
                 page.locator('shreddit-post').screenshot(path=postcontentpath)
         except Exception as e:
             print_substep("Something went wrong!", style="red")
+            print(e)
             resp = input(
                 "Something went wrong with making the screenshots! Do you want to skip the post? (y/n) "
             )
