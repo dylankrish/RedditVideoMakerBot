@@ -224,6 +224,16 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
 
                 page.goto(f"https://new.reddit.com/{comment['comment_url']}")
 
+                # hide ALL replies in screenshot
+                page.evaluate("""
+                    () => {
+                        document.querySelectorAll('shreddit-comment[depth]:not([depth="0"])').forEach(el => {
+                            el.style.display = "none";
+                        });
+                    }
+                """)
+
+
                 if settings.config["reddit"]["thread"]["post_lang"]:
                     comment_tl = translators.translate_text(
                         comment["comment_body"],
