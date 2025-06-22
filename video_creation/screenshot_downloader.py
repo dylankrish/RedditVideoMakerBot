@@ -224,6 +224,11 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
 
                 page.goto(f"https://new.reddit.com/{comment['comment_url']}")
 
+                try:
+                    page.wait_for_selector('shreddit-comment[depth="1"]', timeout=3000)
+                except:
+                    pass
+
                 # hide ALL replies in screenshot
                 page.evaluate("""
                     () => {
