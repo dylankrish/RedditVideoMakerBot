@@ -224,6 +224,7 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
 
                 page.goto(f"https://new.reddit.com/{comment['comment_url']}")
 
+                # wait for replies to be visible
                 try:
                     page.wait_for_selector('shreddit-comment[depth="1"]', timeout=3000)
                 except:
@@ -234,6 +235,17 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
                     () => {
                         document.querySelectorAll('shreddit-comment[depth]:not([depth="0"])').forEach(el => {
                             el.style.display = "none";
+                        });
+                    }
+                """)
+
+                # hide "View more replies" button
+                page.evaluate("""
+                    () => {
+                        document.querySelectorAll('button').forEach(btn => {
+                            if (btn.textContent.includes("View more replies")) {
+                                btn.style.display = "none";
+                            }
                         });
                     }
                 """)
